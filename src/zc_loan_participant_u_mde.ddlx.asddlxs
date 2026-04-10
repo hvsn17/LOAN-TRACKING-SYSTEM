@@ -1,0 +1,25 @@
+@Metadata.layer: #CUSTOMER
+annotate view ZC_LOAN_PARTICIPANT_U with {
+
+  @UI.facet: [ { id: 'ParticipantData', 
+                 type: #IDENTIFICATION_REFERENCE, 
+                 label: 'Participant Details', 
+                 position: 10 } ]
+
+ @UI: { lineItem: [{ position: 10, label: 'Full Name' }],
+         identification: [{ position: 10, label: 'Full Name' }] }
+  FullName;
+
+  @UI: { lineItem: [{ position: 20, label: 'Role' }],
+         identification: [{ position: 20, label: 'Role' }] }
+  Role;
+
+  @UI: { lineItem: [{ position: 30, label: 'Credit Score' }],
+         identification: [{ position: 30, label: 'Credit Score' }] }
+  CreditScore;
+
+  /* Add any other fields from your table here with @UI.lineItem */
+  @UI: { lineItem: [{ position: 40, label: 'Loan Reference' }],
+         identification: [{ position: 40 }] }
+  LoanId;
+}

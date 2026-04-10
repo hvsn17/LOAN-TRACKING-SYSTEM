@@ -1,0 +1,5 @@
+CLASS zbp_r_loanheader_u DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zr_loanheader_u.
+ENDCLASS.
+
+CLASS zbp_r_loanheader_u IMPLEMENTATION.
+ENDCLASS.

@@ -1,0 +1,5 @@
+@EndUserText.label: 'LOAN HDR SE'
+define service ZSE_LOANHDR_U {
+  expose ZC_LOANHDR_U;
+  expose ZC_LOAN_PARTICIPANT_U;
+}

@@ -1,0 +1,30 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_LOANHDR_U alias Loan
+{
+  use create;
+  use update;
+  use delete;
+
+  // Standard Draft Actions (Needed for Edit/Save buttons)
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  // Custom Action (The 'Approve' button)
+  use action approveLoan;
+
+  use association _Items { create; with draft; }
+}
+
+define behavior for ZC_LOAN_PARTICIPANT_U alias Participant
+{
+  use update;
+  use delete;
+
+  use association _Header { with draft; }
+}

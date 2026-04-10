@@ -1,0 +1,65 @@
+unmanaged implementation in class zbp_r_loanheader_u unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZR_LoanHeader_U alias Loan
+
+draft table zloan_hdr_u_d
+lock master
+total etag LastChangedAt
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  // --- MANDATORY DRAFT ACTIONS FOR STRICT(2) ---
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+
+  // Required to validate the draft before it becomes active
+  draft determine action Prepare;
+
+  association _Items { create; with draft; }
+
+  field ( readonly, numbering : managed ) LoanId;
+  field ( readonly ) CreatedBy, LastChangedAt;
+
+  action ( features : instance ) approveLoan result [1] $self;
+
+  mapping for zloan_hdr_u
+  {
+    LoanId = loan_id;
+    LoanType = loan_type;
+    Amount = amount;
+    Currency = currency;
+    Status = status;
+    CreatedBy = created_by;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for ZR_LOAN_PARTICIPANT_U alias Participant
+draft table zloan_part_u_d
+lock dependent by _Header
+authorization dependent by _Header
+{
+  update;
+  delete;
+
+  field ( readonly ) LoanId;
+  field ( readonly, numbering : managed ) PartId;
+
+  association _Header { with draft; }
+
+  mapping for zloan_part_u
+  {
+    PartId = part_id;
+    LoanId = loan_id;
+    Role = role;
+    FullName = full_name;
+    CreditScore = credit_score;
+  }
+}

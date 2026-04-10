@@ -1,0 +1,70 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: { 
+    typeName: 'Loan Application', 
+    typeNamePlural: 'Loan Applications',
+    title: { type: #STANDARD, value: 'LoanId' },
+    description: { value: 'LoanType' }
+  },
+  presentationVariant: [{ sortOrder: [{ by: 'LastChangedAt', direction: #DESC }] }]
+}
+annotate view ZC_LOANHDR_U with {
+
+  /* --- Facet Configuration --- */
+  @UI.facet: [ 
+    { id: 'HeaderInfo', 
+      type: #COLLECTION, 
+      label: 'Loan Overview', 
+      position: 10 },
+      
+    { id: 'GeneralInfo', 
+      parentId: 'HeaderInfo',
+      type: #IDENTIFICATION_REFERENCE, 
+      label: 'General Information', 
+      position: 10 },
+
+    { id: 'Participants', 
+      type: #LINEITEM_REFERENCE, 
+      targetElement: '_Items', 
+      label: 'Loan Participants', 
+      position: 20 } 
+  ]
+
+  /* --- Field Annotations --- */
+
+  @UI: { lineItem:       [{ position: 10, label: 'Reference ID' }],
+         identification: [{ position: 10, label: 'Reference ID' }] }
+  LoanId;
+
+  @UI: { lineItem:       [{ position: 20, label: 'Loan Type' }],
+         identification: [{ position: 20, label: 'Loan Type' }],
+         selectionField: [{ position: 20 }] }
+  LoanType;
+
+  @UI: { lineItem:       [{ position: 30, label: 'Amount' }],
+         identification: [{ position: 30, label: 'Requested Amount' }] }
+  Amount;
+
+  @UI: { identification: [{ position: 40, label: 'Currency' }] }
+  Currency;
+
+  @UI: { 
+    lineItem: [ 
+      { position: 50, label: 'Status' },
+      /* Action button in the Table row */
+      { type: #FOR_ACTION, dataAction: 'approveLoan', label: 'Approve', position: 10 } 
+    ], 
+    identification: [ 
+      { position: 50, label: 'Current Status' },
+      /* Action button in the Object Page Header */
+      { type: #FOR_ACTION, dataAction: 'approveLoan', label: 'Approve Loan', position: 10 }
+    ] 
+  }
+  Status;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+}
